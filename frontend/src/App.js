@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="App">
       <br />
-      <button onClick={() => setFile(null)}>Clear File</button>
+      <button onClick={() => setFile(null)}>limpar </button>
     </div>
   );
 }

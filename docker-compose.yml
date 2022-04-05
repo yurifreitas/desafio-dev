@@ -12,18 +12,31 @@ services:
       - "5432:5432"
       expose:
       - "5432"
-    
+      
+    pg_admin:
+      container_name: pgadmin4
+      image: dpage/pgadmin4:latest
+      restart: always
+      ports:
+        - "5050:80"
+      environment:
+        - PGADMIN_DEFAULT_EMAIL=postgres@gmail.com
+        - PGADMIN_DEFAULT_PASSWORD=postgres
+      depends_on:
+        - db   
     web:
         build: frontend
+        environment:
+           CHOKIDAR_USEPOLLING: "true"
         ports:
-          - 3000:3000
-        depends_on:
-          - api
+          - "3000:3000"
         stdin_open: true
         tty: true
-        # volumes:
-        #   - ./frontend:app
-        #   - ./app/node_modules
+        volumes:
+          - ./frontend:/app
+          - /app/node_modules
+        depends_on:
+          - api
 
     api:
         build: backend
