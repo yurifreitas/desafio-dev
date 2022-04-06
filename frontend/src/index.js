@@ -1,13 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Default from './components/themes/Default/Default';
-import App from './components/pages/App';
+import App from './pages';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Default>
-      <App />
-    </Default>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
