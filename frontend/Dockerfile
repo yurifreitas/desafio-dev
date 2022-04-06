@@ -1,11 +1,14 @@
-FROM node:16-alpine
+FROM node:lts-alpine3.14
 
 WORKDIR /app
 
 COPY package.json .
 
-RUN npm install
+#Caso precise limpar o cache para instalar pacotes
+#RUN npm cache clean --force  
+RUN npm install --loglevel verbose
 
+#permissão para funcionar reload
 RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 
 COPY . .
