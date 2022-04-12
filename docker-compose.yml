@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - ./postgres_db/pg_init.sh:/docker-entrypoint-initdb.d/pg_init.sh
+      - ./postgres_db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     expose:
