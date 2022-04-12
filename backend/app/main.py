@@ -1,11 +1,10 @@
 import shutil
 import os
+import crud
 from fastapi import FastAPI,File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi_sqlalchemy import DBSessionMiddleware, db
 
 from database import SessionLocal, engine
-from sqlalchemy.orm import Session
 
 from models import CNAB as ModelCNAB
 from schema import CNAB as CNABSchema
@@ -13,13 +12,13 @@ from schema import CNAB as CNABSchema
 
 
 app = FastAPI()
-def db():
+def db_conection():
     try:
         db = SessionLocal()
-        yield db
+        return db
     finally:
         db.close()
-print(db())
+
 origins = [
     "*",
     "http://localhost",
@@ -33,23 +32,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-def save_file(file):
-    global upload_folder
-    file_object = file.file
-    #create empty file to copy the file_object to
-    upload_folder = open(os.path.join(upload_folder, file.filename), 'wb+')
-    shutil.copyfileobj(file_object, upload_folder)
-    upload_folder.close()
-
-@app.get('/book/')
-async def book():
-    book = db.session.query(ModelBook).all()
-    return book
-
-
 
 @app.get("/")
 def read_root():
+    crud.get_file_cnab(db_conection())
     return {"Hello": "World"}
 
 @app.post("/upload")

@@ -8,12 +8,18 @@ Base  = declarative_base()
 class CNAB(Base):
     __tablename__ = 'cnab'
     id  = Column(Integer, primary_key=True, index=True)
-    title = Column(String)
-    rating = Column(Float)
+    dono_loja = Column(String)
+    nome_loja = Column(String)
+    type = Column(String)
+    card = Column(String)
+    cpf = Column(String)
+    date = Column(String)
+    value = Column(String)
+    time = Column(String)
     time_created = Column(DateTime(timezone=True), server_default=func.now())
     time_updated = Column(DateTime(timezone=True), onupdate=func.now())
-    author_id = Column(Integer, ForeignKey('author.id'))
+    #author_id = Column(Integer, ForeignKey('author.id'))
 
-    author = relationship('Author')
+    #author = relationship('Author')
 
 
