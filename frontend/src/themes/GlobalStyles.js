@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,6 +34,36 @@ h1,h2,h3,h4,h5,h6 {
   color: ${props => props.theme.headings};
   transition: color ${props => props.theme.transitionTime};
   font-family: 'Merriweather', serif;
+}
+.App {
+  font-family: sans-serif;
+}
+
+ul {
+  margin: 0;
+}
+
+span {
+  font-size: 2rem;
+  color: #777;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 20px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+
+  margin-bottom: 20px;
+}
+
+.accept {
+  border-color: #107c10 !important;
+}
+
+.reject {
+  border-color: #d83b01 !important;
 }
 `;
 export {

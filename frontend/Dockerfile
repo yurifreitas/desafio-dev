@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json .
 
 #Caso precise limpar o cache para instalar pacotes
-#RUN npm cache clean --force  
+RUN npm cache clean --force  
 RUN npm install --loglevel verbose
 
 #permissão para funcionar reload

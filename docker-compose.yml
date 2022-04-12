@@ -5,6 +5,7 @@ services:
   db:
     image: postgres
     environment:
+      POSTGRES_DB: dados_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
@@ -42,8 +43,15 @@ services:
 
   api:
     build: backend
-    environment:
-      - DB_HOST=db
+    volumes:
+      - ./backend:/code
+    # environment:
+    #   - SECRET_KEY=supersecret
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    #   - POSTGRES_SERVER=db
+    #   - POSTGRES_PORT=5432
+    #   - POSTGRES_DB=dados_db
     ports:
       - 8000:8000
     depends_on:

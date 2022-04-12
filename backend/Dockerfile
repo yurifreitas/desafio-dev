@@ -20,4 +20,6 @@ RUN apk del build-deps
 
 ADD ./app /code/app
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port","8000"]
+ENV PYTHONPATH "${PYTHONPATH}:/code/app"
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port","8000","--reload"]

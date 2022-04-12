@@ -1,24 +1,57 @@
-import React, { useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import Dropzone from 'react-dropzone'
+import UploadFilesService from '../../services/UploadFilesService'
 export default function Home() {
-    const [error, setError] = useState("")
+    const [files, setFiles] = useState([]);
+    const handleDrop = acceptedFiles => {
+        UploadFilesService.upload(acceptedFiles);
+    }
+    const getfiles = () => {
+        setFiles(UploadFilesService.getFiles())
+    }
+
     return (
-        <>
-            <Link to="/" className="btn btn-primary w-100 mb-3">Home</Link>
-            <Card>
-                <Card.Body>
-                    <h2 className="text-center mb-4">Perfil</h2>
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    <strong>Email: </strong>
-                    <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Atualizar perfil</Link>
-                </Card.Body>
+        <div className="App">
+            <Dropzone
+                onDrop={handleDrop}
+                accept=".txt"
+                minSize={1024}
+                maxSize={3072000}
+            >
+                {({
+                    getRootProps,
+                    getInputProps,
+                    isDragActive,
+                    isDragAccept,
+                    isDragReject
+                }) => {
+                    const additionalClass = isDragAccept
+                        ? "accept"
+                        : isDragReject
+                            ? "reject"
+                            : "";
 
-            </Card>
-            <div className="w-100 text-center mt-2">
-                <Button variant="link" >Sair</Button>
+                    return (
+                        <div
+                            {...getRootProps({
+                                className: `dropzone ${additionalClass}`
+                            })}
+                        >
+                            <input {...getInputProps()} />
+                            <span>{isDragActive ? "📂" : "📁"}</span>
+                            <p>Arraste e Solte arquivos aqui ou clique para carregar!!</p>
+                        </div>
+                    );
+                }}
+            </Dropzone>
+            <div>
+                <strong>Arquivos:</strong>
+                <ul>
+                    {files.map(file => (
+                        <li key={file.name}>{file.name}</li>
+                    ))}
+                </ul>
             </div>
-        </>
-    )
-
+        </div>
+    );
 }
