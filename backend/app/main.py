@@ -1,4 +1,3 @@
-import shutil
 import os
 import crud
 from fastapi import FastAPI,File, UploadFile
@@ -10,8 +9,8 @@ from models import CNAB as ModelCNAB
 from schema import CNAB as CNABSchema
 
 
-
 app = FastAPI()
+
 def db_conection():
     try:
         db = SessionLocal()
@@ -35,14 +34,15 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    crud.get_file_cnab(db_conection())
-    return {"Hello": "World"}
+    lines_list = crud.get_file_cnab(db_conection())
+    return {"Lista Linhas": lines_list}
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
     content = file.file.read()
     lines = content.splitlines()
     count = 0
+    lines_list = []
     for line in lines:
         line = line.decode("utf-8")
         tipo=line[:1]
@@ -54,19 +54,22 @@ async def upload_file(file: UploadFile = File(...)):
         dono_loja=line[48:62]
         nome_loja=line[62:81]
         count += 1
-        print("*****")
-        print(len(line))
-        print(tipo)
-        print(data)
-        print(valor)
-        print(cpf)
-        print(cartao)
-        print(hora)
-        print(dono_loja)
-        print(nome_loja)
-        print(line)
-    return {"filename": content}
+        line_content = {
+            "line_number":count,
+            "transact_type":tipo,
+            "transact_date":data,
+            "transact_value":valor,
+            "cpf":cpf,
+            "transact_card":cartao,
+            "transact_time":hora,
+            "dono_loja":dono_loja,
+            "nome_loja":nome_loja,
+        }
+        lines_list.append(line_content)
+    crud.save_file_cnab(db_conection(),lines_list)
+    return {"file_line": lines_list,"lines_number": count}
 
 @app.get("/files")
 def get_file():
-    return {"lista":"arquivos"}
+    query = crud.get_file_cnab(db_conection())
+    return {"lista":query}

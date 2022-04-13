@@ -2,6 +2,7 @@
 from pydantic import BaseModel
 
 class CNAB(BaseModel):
+    line_number: str
     transact_type: str
     transact_value: str
     transact_date: str
