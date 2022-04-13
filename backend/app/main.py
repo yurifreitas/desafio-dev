@@ -20,6 +20,7 @@ def db_conection():
 
 origins = [
     "*",
+    "http://localhost:3000/arquivos",
     "http://localhost",
     "http://localhost:3000",
 ]
@@ -72,4 +73,5 @@ async def upload_file(file: UploadFile = File(...)):
 @app.get("/files")
 def get_file():
     query = crud.get_file_cnab(db_conection())
+    print(query)
     return {"lista":query}

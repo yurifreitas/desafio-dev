@@ -1,10 +1,10 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Con } from 'react-bootstrap';
 import { Footer, Header } from '../components';
 const TemplateDefault = ({ children }) => {
 
     return (
-        <Container>
+        <Container fluid>
             <Header />
             {children}
             <Footer />

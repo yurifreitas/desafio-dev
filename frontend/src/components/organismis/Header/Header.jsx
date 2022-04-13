@@ -1,12 +1,11 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
-import { Navbar} from '../../'
+
+import NavbarComponent from '../../molecules/Navbar/Navbar';
 const Header = () => {
     return (
-        <Container>
-            <Navbar/>
-            "ereste"
-        </Container>
+
+        <NavbarComponent />
+
     )
 }
 export default Header

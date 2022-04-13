@@ -3,6 +3,7 @@
 import React from "react"
 import Layout from '../layout/index';
 import Home from "./Home";
+import Files from "./Files";
 import {
   BrowserRouter,
   Routes,
@@ -18,7 +19,7 @@ export default function App() {
         <Routes>
 
           <Route path="/" element={<Home />} />
-          <Route path="listagem" element={""} />
+          <Route path="arquivos" element={<Files />} />
 
         </Routes>
 

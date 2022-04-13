@@ -12,8 +12,11 @@ const UploadFilesService = {
       },
     });
   },
-  getFiles() {
-    return http.get("/files");
+  async getFiles() {
+    var response = await http.get("/files").then((resp)=>{
+      return resp.data
+    });
+    return response
   }
 }
 

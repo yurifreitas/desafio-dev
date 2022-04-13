@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
 import UploadFilesService from '../../services/UploadFilesService'
 export default function Home() {
-    const [files, setFiles] = useState([]);
     const handleDrop = acceptedFiles => {
         UploadFilesService.upload(acceptedFiles);
     }
-    const getfiles = () => {
-        setFiles(UploadFilesService.getFiles())
-    }
-
     return (
         <div className="App">
             <Dropzone
@@ -44,14 +39,7 @@ export default function Home() {
                     );
                 }}
             </Dropzone>
-            <div>
-                <strong>Arquivos:</strong>
-                <ul>
-                    {files.map(file => (
-                        <li key={file.name}>{file.name}</li>
-                    ))}
-                </ul>
-            </div>
+           
         </div>
     );
 }
