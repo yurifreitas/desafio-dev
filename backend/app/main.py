@@ -59,8 +59,8 @@ async def upload_file(file: UploadFile = File(...)):
             "cpf":cpf,
             "transact_card":cartao,
             "transact_time":hora,
-            "dono_loja":dono_loja,
-            "nome_loja":nome_loja,
+            "dono_loja":dono_loja.strip(),
+            "nome_loja":nome_loja.strip(),
         }
         lines_list.append(line_content)
     crud.save_file_cnab(db_conection(),lines_list)
@@ -73,7 +73,15 @@ def get_file():
 
 @app.get("/client")
 def get_single_client(name:str):
-    print(name)
     query = crud.get_single_client(db_conection(),name)
-    print(query)
-    return {"lista":query}
+    total=0.0
+    saida=0.0
+    entrada = 0.0 
+    for item in query:
+        if item.transact_type in ["2","3","9"]:
+            saida = saida + float(item.transact_value)
+        else:
+            entrada = entrada + float(item.transact_value)
+        print(item)
+    total = entrada - saida
+    return {"lista":query,"total":total}

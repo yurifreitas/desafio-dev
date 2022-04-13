@@ -13,11 +13,8 @@ def get_file_cnab(db: Session):
     return db.query(models.CNAB).all()
 
 def get_single_client(db: Session,name:str):
-    print(name)
     return db.query(models.CNAB).filter_by(dono_loja = name).all()
      
-def delete_file_cnab(db: Session):
-    db.query(models.CNAB).delete()
 
 def error_message(message):
     return {
