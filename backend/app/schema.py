@@ -2,14 +2,15 @@
 from pydantic import BaseModel
 
 class CNAB(BaseModel):
-    type: str
-    value: str
-    date: str
+    transact_type: str
+    transact_value: str
+    transact_date: str
     dono_loja : str
     nome_loja : str
-    card : str
+    transact_card : str
     cpf : str
-    time : str
+    transact_time : str
+    
 
     class Config:
         orm_mode = True
