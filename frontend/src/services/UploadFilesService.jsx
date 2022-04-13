@@ -17,6 +17,12 @@ const UploadFilesService = {
       return resp.data
     });
     return response
+  },
+  async getClient(name) {
+    var response = await http.get("/client?"+name).then((resp)=>{
+      return resp.data
+    });
+    return response
   }
 }
 

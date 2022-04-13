@@ -33,10 +33,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    lines_list = crud.get_file_cnab(db_conection())
-    return {"Lista Linhas": lines_list}
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
@@ -73,5 +69,11 @@ async def upload_file(file: UploadFile = File(...)):
 @app.get("/files")
 def get_file():
     query = crud.get_file_cnab(db_conection())
+    return {"lista":query}
+
+@app.get("/client")
+def get_single_client(name:str):
+    print(name)
+    query = crud.get_single_client(db_conection(),name)
     print(query)
     return {"lista":query}

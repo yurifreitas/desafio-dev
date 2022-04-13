@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import UploadFilesService from '../../services/UploadFilesService'
+import { Link } from "react-router-dom";
 import { Table } from 'react-bootstrap';
 export default function Files() {
     const [filesItems, setFilesItems] = useState();
@@ -33,18 +34,22 @@ export default function Files() {
 
                         {filesItems.map(item =>
                         (
-                            <tr>
-                                <td>{item.id}</td>
-                                <td>{item.line_number}</td>
-                                <td>{item.transact_type}</td>
-                                <td>{item.transact_value}</td>
-                                <td>{item.transact_date}</td>
-                                <td>{item.dono_loja}</td>
-                                <td>{item.nome_loja}</td>
-                                <td>{item.transact_card}</td>
-                                <td>{item.cpf}</td>
-                                <td>{item.transact_time}</td>
+
+                            <tr key={"row-" + item.id}>
+                                <td key={item.id}>{item.id}</td>
+                                <td key={item.line_number}>{item.line_number}</td>
+                                <td key={item.transact_type}>{item.transact_type}</td>
+                                <td key={item.transact_value}>{item.transact_value}</td>
+                                <td key={item.transact_date}>{item.transact_date}</td>
+                                <td key={item.dono_loja}><Link to={"/client?name=" + item.dono_loja}>{item.dono_loja}</Link></td>
+                                <td key={item.nome_loja}>{item.nome_loja}</td>
+                                <td key={item.transact_card}>{item.transact_card}</td>
+                                <td key={item.cpf}>{item.cpf}</td>
+                                <td key={item.transact_time}>{item.transact_time}</td>
+
                             </tr>
+
+
 
                         )
                         )}
